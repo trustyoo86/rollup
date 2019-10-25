@@ -47,14 +47,14 @@ export function getPluginContexts(
 	fileEmitter: FileEmitter,
 	watcher: RollupWatcher | undefined
 ): (plugin: Plugin, pluginIndex: number) => PluginContext {
-	const existingPluginKeys = new Set<string>();
+	const existingPluginNames = new Set<string>();
 	return (plugin, pidx) => {
 		let cacheable = true;
 		if (typeof plugin.cacheKey !== 'string') {
-			if (plugin.name.startsWith(ANONYMOUS_PLUGIN_PREFIX) || existingPluginKeys.has(plugin.name)) {
+			if (plugin.name.startsWith(ANONYMOUS_PLUGIN_PREFIX) || existingPluginNames.has(plugin.name)) {
 				cacheable = false;
 			} else {
-				existingPluginKeys.add(plugin.name);
+				existingPluginNames.add(plugin.name);
 			}
 		}
 
